@@ -93,26 +93,25 @@ def gmm_train(E, gauss_pdf, n_realignment):
 
     g = np.zeros([len(E), len(w)])
     for n in range(n_realignment):
-    # E-step
-    ###########################################################
-    # Here is your code
-    for i in range(len(E)):
+        # E-step
+        ###########################################################
+        # Here is your code
+        for i in range(len(E)):
+            for j in range(len(w)):
+                summ = 0
+                for s in range(len(m)):
+                    summ += w[s] * gauss_pdf(E[i], m[s], sigma[s])
+                g[i, j] = (w[j] * gauss_pdf(E[i], m[j], sigma[j])) / summ
+        ###########################################################
+        # M-step
+        ###########################################################
+        # Here is your code
+        M = len(E)
         for j in range(len(w)):
-            summ = 0
-            for s in range(len(m)):
-                summ += w[s] * gauss_pdf(E[i], m[s], sigma[s])
-            g[i, j] = (w[j] * gauss_pdf(E[i], m[j], sigma[j])) / summ
-    ###########################################################
-
-    # M-step
-    ###########################################################
-    # Here is your code
-    M = len(E)
-    for j in range(len(w)):
-        w[j] = np.mean(g[:, j])
-        m[j] = np.sum(g[:, j] * E) / (M * w[j])
-        sigma[j] = np.sqrt(np.sum(g[:, j] * (E - m[j]) ** 2) / (M * w[j]))
-    ###########################################################
+            w[j] = np.mean(g[:, j])
+            m[j] = np.sum(g[:, j] * E) / (M * w[j])
+            sigma[j] = np.sqrt(np.sum(g[:, j] * (E - m[j]) ** 2) / (M * w[j]))
+        ###########################################################
 
     return w, m, sigma
 
