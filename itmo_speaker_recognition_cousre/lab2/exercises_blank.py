@@ -197,3 +197,5 @@ def awgn(signal, sigma_noise):
     ###########################################################
 
     return signal_noise
+def fprint(name):
+    return print(name)
