@@ -2,7 +2,7 @@
 
 
 # Import of modules
-from cmath import log
+from math import log
 
 import numpy as np
 from scipy.fftpack import dct
